@@ -23,21 +23,14 @@ class App extends React.Component {
 
   deleteNinja=(id)=>{
     console.log(id);
-    const ninjas=this.state.ninjas.filter(ninja=>
-      {
-        return ninja.id !==id;
-      });
-    this.setState({
-      ninjas:ninjas
-    })
   }
 render(){
   return (
     <div className="App">
   <h1>My App</h1>
   <p>welcome:)</p>
-<AddNinja AddNinja={this.AddNinja} />
-  <Ninjas ninjas={this.state.ninjas} deleteNinja={this.deleteNinja}/>
+<AddNinja AddNinja={this.AddNinja} deleteNinja={this.deleteNinja}/>
+  <Ninjas ninjas={this.state.ninjas}/>
     </div>
   );
 }
