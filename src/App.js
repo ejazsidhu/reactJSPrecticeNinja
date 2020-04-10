@@ -1,6 +1,8 @@
 import React from 'react';
 import Ninjas from './ninjas'
 import AddNinja from './addNinja';
+import TodoList from './todo-components/todo-list';
+import AddTodo from './todo-components/addTodo';
 
 class App extends React.Component {
   state={
@@ -11,6 +13,11 @@ class App extends React.Component {
       {id:4,name:"Asima",age:"23",belt:"White"}
 
 
+    ],
+    todoList:[
+      {
+        id:0,content:'enter first todo'
+      }
     ]
   }
   AddNinja=(ninja)=>{
@@ -31,13 +38,34 @@ class App extends React.Component {
       ninjas:ninjas
     })
   }
+
+  addTodo=(todo)=>{
+    todo.id=Math.random();
+    const todoList=[...this.state.todoList,todo];
+    this.setState({
+      todoList:todoList
+    })
+  }
+
+  deleteTodo=(id)=>{
+    const todoList=this.state.todoList.filter(todo=>{
+      return todo.id!==id;
+    })
+    this.setState({
+      todoList:todoList
+    })
+  }
 render(){
   return (
-    <div className="App">
-  <h1>My App</h1>
-  <p>welcome:)</p>
-<AddNinja AddNinja={this.AddNinja} />
-  <Ninjas ninjas={this.state.ninjas} deleteNinja={this.deleteNinja}/>
+    <div className="container">
+  <h1 className="center blue-text">Todo App</h1>
+  
+{/* <AddNinja AddNinja={this.AddNinja} />
+  <Ninjas ninjas={this.state.ninjas} deleteNinja={this.deleteNinja}/> */}
+<TodoList todoList={this.state.todoList} deleteTodo={this.deleteTodo}/>
+<AddTodo addTodo={this.addTodo} />
+
+
     </div>
   );
 }
