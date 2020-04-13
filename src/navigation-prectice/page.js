@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import Pokeball from '../pokeball.png'
+
 class Page extends Component {
     state = {
         params: null,
@@ -25,8 +27,10 @@ class Page extends Component {
         const { params, post } = this.state;
         const singlePost=post?( 
              <div className="post card" key={post.id}>
+                        <img src={Pokeball} width="200" alt=" A PokeBall"/>
+
         <div className="card-content">
-            <Link to={'/' + post.id} className="card-title">{post.title}</Link>
+            <Link to={'/' + post.id} className="card-title red-text">{post.title}</Link>
             <p>{post.body}</p>
         </div>
     </div>
@@ -34,7 +38,7 @@ class Page extends Component {
         <div className="center">Loading post...</div>
     )
         return (
-            <div className="container">
+            <div className="container home">
               {singlePost}
 
             </div>
