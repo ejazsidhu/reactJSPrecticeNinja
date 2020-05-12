@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Pokeball from '../pokeball.png';
 import {connect} from 'react-redux';
+import {deletePost} from '../actions/postActions'
 
 class Page extends Component {
     // state = {
@@ -24,8 +25,14 @@ class Page extends Component {
     //         }
     //         )
     // }
+
+    handleDelete=(id)=>{
+    // console.log('delete post called',id)
+        this.props.deletePost(id); 
+        this.props.history.push('/'); 
+    }
     render() {
-        const { params, post } = this.state;
+        const { params, post } = this.props;
         const singlePost=post?( 
              <div className="post card" key={post.id}>
                         <img src={Pokeball} width="200" alt=" A PokeBall"/>
@@ -34,7 +41,7 @@ class Page extends Component {
             <Link to={'/' + post.id} className="card-title red-text">{post.title}</Link>
             <p>{post.body}</p>
             <div>
-                <button>Delete Post</button>
+                <button className="btn gray" onClick={()=>{this.handleDelete(post.id)}}>Delete Post</button>
             </div>
         </div>
     </div>
@@ -50,9 +57,18 @@ class Page extends Component {
     }
 }
 const mapStateToProps = (state, ownProps) => {
+    console.log(state,ownProps);
+    let id=ownProps.match.params.post_id;
     return {
-        prop: state.prop
+        post: state.posts.find(post=>post.id==id)
+    }
+}
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        deletePost: (id) => {
+            dispatch(deletePost(id))
+        }
     }
 }
 
-export default connect(mapStateToProps)(Page);
+export default connect(mapStateToProps,mapDispatchToProps)(Page);
