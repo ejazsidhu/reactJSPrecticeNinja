@@ -1,28 +1,29 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import Pokeball from '../pokeball.png'
+import Pokeball from '../pokeball.png';
+import {connect} from 'react-redux';
 
 class Page extends Component {
-    state = {
-        params: null,
-        post: null
-    }
-    componentDidMount() {
-        const params = this.props.match.params['post_id'];
-        console.log(params);
-        this.setState({
-            params: params
-        })
-        axios.get('https://jsonplaceholder.typicode.com/posts/' + params)
-            .then(res => {
-                console.log('pos response', res)
-                this.setState({
-                    post: res.data
-                })
-            }
-            )
-    }
+    // state = {
+    //     params: null,
+    //     post: null
+    // }
+    // componentDidMount() {
+    //     const params = this.props.match.params['post_id'];
+    //     console.log(params);
+    //     this.setState({
+    //         params: params
+    //     })
+    //     axios.get('https://jsonplaceholder.typicode.com/posts/' + params)
+    //         .then(res => {
+    //             console.log('pos response', res)
+    //             this.setState({
+    //                 post: res.data
+    //             })
+    //         }
+    //         )
+    // }
     render() {
         const { params, post } = this.state;
         const singlePost=post?( 
@@ -32,6 +33,9 @@ class Page extends Component {
         <div className="card-content">
             <Link to={'/' + post.id} className="card-title red-text">{post.title}</Link>
             <p>{post.body}</p>
+            <div>
+                <button>Delete Post</button>
+            </div>
         </div>
     </div>
     ):(
@@ -45,5 +49,10 @@ class Page extends Component {
         );
     }
 }
+const mapStateToProps = (state, ownProps) => {
+    return {
+        prop: state.prop
+    }
+}
 
-export default Page;
+export default connect(mapStateToProps)(Page);
